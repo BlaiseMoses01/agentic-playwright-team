@@ -127,6 +127,9 @@ npm run cucumber:ui
 # Run with full reporting (JSON + HTML + JUnit)
 npm run cucumber:report
 
+# Run select tags
+ npm run cucumber:tags -- --tags "@ui and @auth or ..." 
+
 # Run Playwright specs directly
 npm test
 ```
@@ -147,3 +150,6 @@ npm test
 - **[TypeScript](https://www.typescriptlang.org/)** — type-safe step definitions and page objects
 - **[agent-browser](https://github.com/vercel-labs/agent-browser)** — headless browser CLI used by the exploration agent
 - **[Claude Code](https://claude.ai/claude-code)** — AI agent orchestration
+
+---
+*Test PR change — this line was added to verify the PR creation workflow.*
