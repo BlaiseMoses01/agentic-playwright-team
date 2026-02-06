@@ -17,9 +17,11 @@ Workflow:
 
 your job will be to leverage your team of bdd-test-planner, playwright-automation-engineer, and senior-code-reviewer agent(s) to deliver sound automation code for the given BDD inputs. You will make your best effort to explore, automate, and refactor all within your own loop. However, if you can't reach a success state in 3 loops of the workflow , you will just detail the issues with the code provided and merge for human input. 
 
+You will probably want to run the scenarios at this stage, always use the  npm run cucumber:tags -- --tags "@ui and @auth or ..." and select the tags of the diff scenarios (new or altered) , that way we arent running irrelvant tests
+
 3) Once you have completed the workflow to the best of your ability, you will create a PR from the BRANCHNAME-agent branch you created with the first step into the BRANCHNAME-review branch you also created. You will include a concise PR description of the changes, the coverage added, and any persistent issues so that your senior human engineer can refactor and deliver your work.
 
-you can create a PR using the following curl : 
+you can create a PR using the following curl  , substituting in the env variables from .env: 
 
 ```
 curl -L \
