@@ -2,6 +2,7 @@ import { After, AfterAll, Before, BeforeAll, setDefaultTimeout } from "@cucumber
 import { chromium, firefox, webkit, type Browser } from "@playwright/test";
 import type { MyWorld } from "./world.js";
 import { PageManager } from "../pages/pageManager.page.js";
+import { BASE_URL } from "./config.js";
 
 const browserMap = { chromium, firefox, webkit };
 const browserName = (process.env.BROWSER || "chromium").toLowerCase();
@@ -22,6 +23,14 @@ Before(async function (this: MyWorld) {
   const page = await this.context.newPage();
   this.page = page;
   this.pages = new PageManager(page);
+});
+
+Before({ tags: "@products" }, async function (this: MyWorld) {
+  const adminToken = process.env.ADMIN_TOKEN || "unsuspecting-yeti-26";
+  await fetch(`${BASE_URL}/__admin/seed`, {
+    method: "POST",
+    headers: { "x-admin-token": adminToken },
+  });
 });
 
 After(async function (this: MyWorld, scenario) {
