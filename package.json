@@ -1,0 +1,25 @@
+{
+  "name": "sdet-challenge-runner",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test --config=playwright.config.ts",
+    "test:headed": "playwright test --config=playwright.config.ts --headed",
+    "test:debug": "playwright test --config=playwright.config.ts --debug",
+    "bdd": "node --loader ts-node/esm node_modules/@cucumber/cucumber/bin/cucumber-js",
+    "cucumber": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs",
+    "cucumber:api": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --tags @api",
+    "cucumber:ui": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --tags @ui",
+    "cucumber:report": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --profile report",
+    "cucumber:tags": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs"
+
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.0.0",
+    "@playwright/test": "^1.58.1",
+    "@types/node": "^25.1.0",
+    "agent-browser": "^0.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
+}
