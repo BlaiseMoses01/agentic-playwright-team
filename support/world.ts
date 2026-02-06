@@ -11,6 +11,12 @@ export class MyWorld extends World {
   /** Stores signup data so Then steps can verify the account name */
   signupName?: string;
 
+  /** Stores the product ID being acted on for stock tracking */
+  productId?: number;
+
+  /** Stores stock count before an add/remove action for comparison */
+  stockBefore?: number;
+
   constructor(options: ConstructorParameters<typeof World>[0]) {
     super(options);
   }
