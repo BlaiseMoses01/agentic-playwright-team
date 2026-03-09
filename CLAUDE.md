@@ -1,35 +1,60 @@
-This is an agentic-driven QA repo for automation scripting, you will explore BDD sceanrios and write meaningful , robust test coverage for the given scenarios. With your team of agents you will take test automation e2e and deliver to senior human engineers for review , your workflow will be as follows : 
+This is a boilerplate repo for agentic-driven QA automation using Playwright + Cucumber BDD. Your team of agents will explore BDD scenarios, write robust test coverage, and deliver automation code for human review.
 
-You will recieve a prompt giving you instruction about what feature file(s) your team needs to automate, and you will be given directions to where any specific depencies will be that aren't the generic ones below. 
+You will receive a prompt with instructions about which feature file(s) to automate and any project-specific context beyond the general dependencies below.
 
-GENERAL DEPENDENCIES
+## General Dependencies
 
-`TARGET` in `.env`. , this is the site/deployment you will target, you may need to explore different routes of that , but you will be given the root
+- `TARGET` in `.env` — the root URL of the application under test. You may need to explore different routes, but you'll be given the root.
+- Test user credentials via role-based env vars in `.env`: `TEST_USER_<ROLE>_EMAIL`, `TEST_USER_<ROLE>_PASSWORD`, `TEST_USER_<ROLE>_NAME`. Use `getTestUser("admin")` from `support/users.ts` in step definitions.
+- `.env` also contains `GITHUB_API_TOKEN`, `GITHUB_OWNER`, and `GITHUB_REPO` for PR creation.
 
-user logins and info in `user.json` , you will need these for auth and such
+## Workflow
 
+### 1. Branch Setup
 
-Workflow:
+Create a safe VC environment for your work. You will be given a branch name in your initial prompt:
 
-1) you will create a safe VC environment for your work. You will be given a branch name in your initial prompt, run  `bash ./scripts/create-branches.sh BRANCHNAME main, unless told otherwise for the source and then change main to that value.
-
-2) once you've created the branches and are on the agent branch, you will start your workflow. 
-
-your job will be to leverage your team of bdd-test-planner, playwright-automation-engineer, and senior-code-reviewer agent(s) to deliver sound automation code for the given BDD inputs. You will make your best effort to explore, automate, and refactor all within your own loop. However, if you can't reach a success state in 3 loops of the workflow , you will just detail the issues with the code provided and merge for human input. 
-
-You will probably want to run the scenarios at this stage, always use the  npm run cucumber:tags -- --tags "@ui and @auth or ..." and select the tags of the diff scenarios (new or altered) , that way we arent running irrelvant tests
-
-3) Once you have completed the workflow to the best of your ability, you will create a PR from the BRANCHNAME-agent branch you created with the first step into the BRANCHNAME-review branch you also created. You will include a concise PR description of the changes, the coverage added, and any persistent issues so that your senior human engineer can refactor and deliver your work.
-
-you can create a PR using the following curl  , substituting in the env variables from .env: 
-
+```bash
+bash ./scripts/create-branches.sh BRANCHNAME main
 ```
+
+Change `main` to another source branch if instructed. This creates two branches:
+
+- `feature/BRANCHNAME-agent` — where you work
+- `feature/BRANCHNAME-review` — PR target for human review
+
+### 2. Explore, Automate, Review
+
+Once on the agent branch, leverage your team of agents:
+
+- **bdd-test-planner** — explores the live app and documents locators, page structures, and flows
+- **playwright-automation-engineer** — writes step definitions, page objects, and support code
+- **senior-code-reviewer** — runs tests, reviews code quality, and provides feedback or PR summary
+
+Make your best effort to explore, automate, and refactor within your own loop. If you can't reach a passing state in **3 iterations**, detail the issues with the code and merge for human input.
+
+Run scenarios using tag filters to avoid running unrelated tests:
+
+```bash
+npm run cucumber:tags -- --tags "@ui and @your-tag or @another-tag"
+```
+
+### 3. Deliver via Pull Request
+
+Create a PR from `feature/BRANCHNAME-agent` into `feature/BRANCHNAME-review` with a concise description of:
+
+- Changes made
+- Coverage added
+- Any persistent issues for human follow-up
+
+Use the GitHub API to create the PR, substituting env variables from `.env`:
+
+```bash
 curl -L \
   -X POST \
   -H "Accept: application/vnd.github+json" \
-  -H "Authorization: Bearer <YOUR-TOKEN>" \
+  -H "Authorization: Bearer $GITHUB_API_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/OWNER/REPO/pulls \
-  -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"octocat:new-feature","base":"master"}'
-
+  https://api.github.com/repos/$GITHUB_OWNER/$GITHUB_REPO/pulls \
+  -d '{"title":"PR title","body":"PR description","head":"feature/BRANCHNAME-agent","base":"feature/BRANCHNAME-review"}'
 ```

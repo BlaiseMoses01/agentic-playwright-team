@@ -1,25 +1,35 @@
 {
-  "name": "sdet-challenge-runner",
+  "name": "agentic-playwright-bdd",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "playwright test --config=playwright.config.ts",
-    "test:headed": "playwright test --config=playwright.config.ts --headed",
-    "test:debug": "playwright test --config=playwright.config.ts --debug",
     "bdd": "node --loader ts-node/esm node_modules/@cucumber/cucumber/bin/cucumber-js",
     "cucumber": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs",
     "cucumber:api": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --tags @api",
     "cucumber:ui": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --tags @ui",
     "cucumber:report": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs --profile report",
-    "cucumber:tags": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs"
-
+    "cucumber:tags": "NODE_OPTIONS=--loader=ts-node/esm cucumber-js --config cucumber.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
     "@cucumber/cucumber": "^11.0.0",
+    "@eslint/js": "^9.0.0",
     "@playwright/test": "^1.58.1",
     "@types/node": "^25.1.0",
     "agent-browser": "^0.9.1",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "husky": "^9.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "typescript-eslint": "^8.0.0"
   }
 }

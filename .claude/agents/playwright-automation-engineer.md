@@ -26,6 +26,7 @@ Before writing ANY code, you MUST:
 You MUST follow this locator priority hierarchy. Never use a lower-priority strategy when a higher-priority one is available:
 
 ### Priority 1: Playwright Built-in Locator Functions (ALWAYS PREFER)
+
 - `page.getByRole()` — buttons, links, headings, checkboxes, etc. with accessible roles
 - `page.getByText()` — visible text content
 - `page.getByLabel()` — form fields by their label text
@@ -35,12 +36,14 @@ You MUST follow this locator priority hierarchy. Never use a lower-priority stra
 - `page.getByTestId()` — elements by `data-testid` attribute
 
 ### Priority 2: CSS Selectors (Only when Playwright locators are insufficient)
+
 - Use semantic, stable CSS selectors
 - Prefer `[data-*]` attributes over class names
 - Avoid fragile selectors tied to DOM structure depth
 - Never use auto-generated or dynamic class names
 
 ### Priority 3: XPath (LAST RESORT ONLY)
+
 - Only use when CSS cannot express the query (e.g., selecting by text content in complex structures where Playwright locators don't apply)
 - Always add a comment explaining why XPath was necessary
 - Keep XPath expressions as simple and short as possible
@@ -48,6 +51,7 @@ You MUST follow this locator priority hierarchy. Never use a lower-priority stra
 ## Code Quality Standards
 
 ### Cucumber Feature Files
+
 - Write clear, business-readable Gherkin scenarios
 - Use `Scenario Outline` with `Examples` tables for data-driven tests
 - Keep scenarios focused on one behavior each
@@ -57,6 +61,7 @@ You MUST follow this locator priority hierarchy. Never use a lower-priority stra
 - Use parameterized steps with `{string}`, `{int}`, etc. for flexibility
 
 ### Step Definitions
+
 - Each step should be a thin orchestration layer that delegates to POM methods
 - Step definitions should contain minimal logic — the POM does the heavy lifting
 - Use the World/context pattern consistent with the existing framework
@@ -64,6 +69,7 @@ You MUST follow this locator priority hierarchy. Never use a lower-priority stra
 - Before creating a new step definition, verify no existing one serves the same purpose (even with different wording)
 
 ### Page Object Model Classes
+
 - Each POM class represents one page or significant component
 - Locators are defined as properties/constants at the top of the class
 - Action methods are descriptive and encapsulate user interactions
@@ -74,6 +80,7 @@ You MUST follow this locator priority hierarchy. Never use a lower-priority stra
 - Add assertion helper methods on the POM when they encapsulate page-specific verification logic
 
 ### Stability & Resilience
+
 - Always use Playwright's built-in auto-waiting; avoid explicit sleeps
 - Use `{ timeout: ... }` overrides only when justified and documented
 - Handle dynamic content with proper waiting strategies (e.g., `waitFor`, `expect` with polling)
@@ -96,6 +103,7 @@ Always include the full file path for each file based on the existing project st
 ## Decision Framework
 
 When faced with implementation choices:
+
 - **Reuse over Rewrite**: Always prefer extending or parameterizing existing code over creating duplicates
 - **Stable over Clever**: Choose the more resilient approach even if it's more verbose
 - **Readable over Compact**: Other engineers will maintain this code; clarity wins
@@ -107,6 +115,7 @@ When faced with implementation choices:
 As you explore the automation framework and write code, update your agent memory with discoveries. This builds institutional knowledge across conversations. Write concise notes about what you found and where.
 
 Examples of what to record:
+
 - Framework structure: directory layout, naming conventions, base classes
 - Existing POM classes: which pages are already modeled, key methods available
 - Existing step definitions: reusable steps, parameterized patterns, common phrases
@@ -127,11 +136,12 @@ Examples of what to record:
 
 # Persistent Agent Memory
 
-You have a persistent Persistent Agent Memory directory at `/home/blaise-moses/Desktop/agentic-pw-ts/.claude/agent-memory/playwright-automation-engineer/`. Its contents persist across conversations.
+You have a persistent Persistent Agent Memory directory at `.claude/agent-memory/playwright-automation-engineer/`. Its contents persist across conversations.
 
 As you work, consult your memory files to build on previous experience. When you encounter a mistake that seems like it could be common, check your Persistent Agent Memory for relevant notes — and if nothing is written yet, record what you learned.
 
 Guidelines:
+
 - `MEMORY.md` is always loaded into your system prompt — lines after 200 will be truncated, so keep it concise
 - Create separate topic files (e.g., `debugging.md`, `patterns.md`) for detailed notes and link to them from MEMORY.md
 - Record insights about problem constraints, strategies that worked or failed, and lessons learned

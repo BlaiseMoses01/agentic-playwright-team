@@ -30,3 +30,7 @@ test-results/
 blob-report/
 results/
 
+# Claude Code
+.claude/memory/
+.claude/plans/
+.claude/worktrees/
