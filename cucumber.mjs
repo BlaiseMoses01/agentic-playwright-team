@@ -18,5 +18,14 @@ export default function () {
       ],
       publishQuiet: true,
     },
+    debug: {
+      paths: ["./features/**/*.feature"],
+      import: ["./support/**/*.ts", "./steps/**/*.ts"],
+      format: ["progress-bar", "json:results/cucumber-debug.json"],
+      publishQuiet: true,
+      worldParameters: {
+        trace: true,
+      },
+    },
   };
 }
