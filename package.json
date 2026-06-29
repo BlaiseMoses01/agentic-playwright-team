@@ -3,11 +3,23 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "bddgen": "npx bddgen",
+    "test:desktop": "npx bddgen && playwright test --project=desktop",
+    "test:mobile-chrome": "npx bddgen && playwright test --project=mobile",
+    "test:mobile-safari": "npx bddgen && playwright test --project=ios",
+    "test:all": "npx bddgen && playwright test",
+    "test:headed": "npx bddgen && playwright test --headed",
+    "test:debug": "npx bddgen && playwright test --debug",
+    "test:ui": "npx bddgen && playwright test --ui",
+    "test:trace": "npx bddgen && playwright test --trace on",
+    "report": "playwright show-report test-artifacts/playwright-report",
+    "trace:show": "playwright show-trace",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clean": "./scripts/clean-artifacts.sh"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.0.0",

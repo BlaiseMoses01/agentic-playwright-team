@@ -1,5 +1,5 @@
-import { defineConfig } from "@playwright/test";
-import { cucumberReporter } from "playwright-bdd";
+import { defineConfig, devices } from "@playwright/test";
+import { cucumberReporter, defineBddProject } from "playwright-bdd";
 import "dotenv/config";
 
 function required(name: string): string {
@@ -8,10 +8,12 @@ function required(name: string): string {
   return value;
 }
 
-// const testDirectory = defineBddConfig({
-//     features: '',
-//     steps:'',
-// });
+// workaround pattern for multiple devices... limitation of playwright-bdd config logic
+const targets = [
+  { name: "desktop", device: "Desktop Chrome", use: { launchOptions: { slowMo: 1500 } } },
+  { name: "mobile", device: "Pixel 7" },
+  { name: "ios", device: "iPhone 14" },
+];
 
 export default defineConfig({
   fullyParallel: true,
@@ -19,7 +21,7 @@ export default defineConfig({
   workers: process.env.CI ? parseInt(process.env.WORKERS ?? "1", 10) : 2,
   timeout: 30_000,
   reporter: [
-    ["html", { open: "never", outputFile: "test-artifacts/playwright-report.html" }],
+    ["html", { open: "never", outputFolder: "test-artifacts/playwright-report" }],
     ["json", { outputFile: "test-artifacts/playwright-report.json" }],
     cucumberReporter("html", { outputFile: "test-artifacts/cucumber-report.html" }),
   ],
@@ -29,9 +31,14 @@ export default defineConfig({
     trace: "on",
     screenshot: "only-on-failure",
   },
-  //   projects:[ {
-  //         {
-  //             ...defin
-  //         }
-  //   }]
+  projects: targets.map(({ name, device, use }) => ({
+    ...defineBddProject({
+      name,
+      features: "tests/features/**/*.feature",
+      steps: ["tests/baseTest.ts", "tests/steps/**/*.steps.ts"],
+      aiFix: { promptAttachment: true },
+      missingSteps: "fail-on-gen",
+    }),
+    use: { ...devices[device], ...(use ?? {}) },
+  })),
 });

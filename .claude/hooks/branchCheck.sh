@@ -23,6 +23,13 @@ else
     MSG=$(printf "Current branch: %s\nUncommitted changes: %s" "$CURR_BRANCH" "$UNCOMMITTED")
 fi
 
+# This is cool and all but it adds a ton of latency, I'm commenting out for now 
+# # Gather configured MCP servers (name + status), dropping the health-check header line
+# MCP=$(claude mcp list 2>/dev/null | grep -v 'Checking MCP server health' | grep -v '^[[:space:]]*$' | sed 's/^/  /')
+# if [ -n "$MCP" ]; then
+#     MSG=$(printf "%s\nMCP servers:\n%s" "$MSG" "$MCP")
+# fi
+
 # Escape for JSON: backslashes, quotes, then newlines -> \n
 ESCAPED=$(printf '%s' "$MSG" | sed 's/\\/\\\\/g; s/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g')
 echo "{\"systemMessage\": \"$ESCAPED\"}"

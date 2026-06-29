@@ -37,3 +37,7 @@ results/
 
 # graphify dependency-graph build output (curated subset is synced into the second brain)
 graphify-out/
+
+test-artifacts
+.features-gen
+.mcp.json
