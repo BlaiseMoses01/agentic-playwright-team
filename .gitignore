@@ -34,3 +34,6 @@ results/
 .claude/memory/
 .claude/plans/
 .claude/worktrees/
+
+# graphify dependency-graph build output (curated subset is synced into the second brain)
+graphify-out/

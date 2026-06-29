@@ -8,5 +8,5 @@
     "types": ["node"],
     "noEmit": true
   },
-  "include": ["support/**/*.ts", "steps/**/*.ts", "pages/**/*.ts"]
+  "include": ["support/**/*.ts", "steps/**/*.ts", "pages/**/*.ts", "*.config.ts"]
 }
